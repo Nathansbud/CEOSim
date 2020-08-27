@@ -1,3 +1,5 @@
+import * as GameEntities from './entity.js'
+
 type Gender = 'm' | 'f' | 't' | null //male, female, enby
 class Game {
     private static game: Game
@@ -11,6 +13,8 @@ class Game {
     private _business: string
     private _gender: Gender
 
+    private _inventory: any
+
     private constructor() {
         const gameState = this.loadGame()
         
@@ -20,7 +24,8 @@ class Game {
         
         this._earnRate = gameState._salary ?? 0
         this._funds = gameState._funds ?? 0
-        this._debt = gameState.__debt ?? 0
+        this._debt = gameState._debt ?? 0
+        this._inventory = gameState._inventory ?? {} 
 
         Game.manager = GameWindow.getInstance()
     }
@@ -29,13 +34,21 @@ class Game {
         Game.manager.update(this)
     }
 
+    public addEntity(entity: GameEntities.Entity) {
+        if(this._inventory[entity.name]) this._inventory[entity.name].push(entity)
+        else this._inventory[entity.name] = [entity]
+    }
+
     private loadGame = () : any => JSON.parse(localStorage.getItem('save-game') as any) ?? {}
     public saveGame = () : void => localStorage.setItem('save-game', JSON.stringify(this))
     public static getInstance() {
         if(!Game.game) Game.game = new Game()
         return Game.game
     }
-    
+
+
+
+    public get inventory() : any {return this._inventory}
     public get earnRate() : number {return this._earnRate}
     public get funds() : number {return this._funds}
     public get debt() : number {return this._debt}
@@ -86,3 +99,5 @@ class GameWindow {
 
 const GameManager = Game.getInstance() //Singleton game manager
 GameManager.update()
+GameManager.addEntity(GameEntities.Purchasable.Apple)
+console.log(GameManager.inventory)
