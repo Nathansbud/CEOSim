@@ -1,0 +1,7 @@
+body, html {
+    background: #dddddd;
+}
+
+div:not(#status):not(#production) {
+    display: none;
+}
