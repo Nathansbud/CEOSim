@@ -59,6 +59,11 @@ class GameManager {
                 case "Escape": this.closeInventory(); break
             }
         }
+
+        this.workButton.onclick = () => {
+            this.Game.work()
+            this.updateFundText()
+        }
     }
     
     private mf = (amt: number) => this.formatter.format(amt).slice(0, -3) //drop decimal
@@ -74,14 +79,14 @@ class GameManager {
     }
 
 
-    private updateFundText = (amt: number) => this.fundText.textContent = this.mf(amt)
-    private updateEarningText = (amt: number) => this.earningText.textContent = this.mf(amt)
-    private updateDebtText = (amt: number) => this.debtText.textContent = this.mf(amt)
+    private updateFundText = () => this.fundText.textContent = this.mf(this.Game.funds)
+    private updateEarningText = () => this.earningText.textContent = this.mf(this.Game.earnRate)
+    private updateDebtText = () => this.debtText.textContent = this.mf(this.Game.debt)
     
     public update() {
-        this.updateEarningText(this.Game.earnRate)
-        this.updateFundText(this.Game.funds)
-        this.updateDebtText(this.Game.debt)
+        this.updateEarningText()
+        this.updateFundText()
+        this.updateDebtText()
     }
     public static getInstance() {
         if(!GameManager.manager) GameManager.manager = new GameManager()

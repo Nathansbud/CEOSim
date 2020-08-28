@@ -17,6 +17,10 @@ section:not(#status):not(#production) {
     display: none;
 }
 
+#inventory-content {
+    transform: translate(40%, -50%);
+}
+
 #inventory h1 {
     text-align: center;
     text-decoration: underline;
@@ -24,6 +28,8 @@ section:not(#status):not(#production) {
 
 #inventory li {
     font-weight: bold;
+    font-size: x-large;
+    cursor: pointer;
 }
 
 h1.surround::before {content: "[";}

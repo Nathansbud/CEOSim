@@ -15,7 +15,8 @@ class Game {
     private _inventory: Inventory
 
     private constructor() {
-        const gameState = this.loadGame()
+        //td: destructure this instead of assigning directly?
+        const gameState = this.load()
         
         this._ceo = gameState._ceo ?? ""
         this._business = gameState._business ?? ""
@@ -33,9 +34,13 @@ class Game {
     }
     public addEntities = (...entity: Entity[]) : void => entity.forEach(ne => this.addEntity(ne))
 
+    public work() {
+        this._funds += this._earnRate
+        this.save()
+    }
 
-    private loadGame = () : any => JSON.parse(localStorage.getItem('save-game') as any) ?? {}
-    public saveGame = () : void => localStorage.setItem('save-game', JSON.stringify(this))
+    private load = () : any => JSON.parse(localStorage.getItem('save-game') as any) ?? {}
+    public save = () : void => localStorage.setItem('save-game', JSON.stringify(this))
     public static getInstance() {
         if(!Game.game) Game.game = new Game()
         return Game.game
