@@ -12,9 +12,18 @@ enum EntityBehavior {
     TimeLimited = 1 << 1,
 }
 
+interface EntityMutableProperty {
+    cost?: number
+    quality?: Quality
+    lifetime?: number | Timestamp
+    expiry?: number | Timestamp
+    flags?: EntityBehavior
+}
+
+
 type Quality = 'trash' | 'low' | 'normal' | 'high' | 'excellent' 
 class Entity {
-    private _name: string
+    // [prop: string] : any
     private _cost: number
     
     private _lifetime: number | Timestamp //Total entity lifetime
@@ -23,6 +32,9 @@ class Entity {
     private _id: string
     private _flags?: EntityBehavior
     private _quality?: Quality
+    
+    [prop: string]: any
+    [prop: number]: any
     
     constructor(name: string, cost: number, lifetime: number | Timestamp, id: string, quality?: Quality, flags?: EntityBehavior) {
         this._name = name
@@ -35,9 +47,15 @@ class Entity {
         this._flags = flags
     }
 
-    public age = () => this._lifetime - this._expiry
-    
+    public modify(data: EntityMutableProperty) : Entity {
+        const entityProperties = Object.keys(Object.getOwnPropertyDescriptors(this))
+        for(const [prop, value] of Object.entries(data)) {
+            if(entityProperties.includes(`_${prop}`)) this[`_${prop}`] = value
+        }
+        return this
+    }
 
+    public age() {return this._lifetime - this._expiry}
     public get name() : string {return this._name}
 
 
@@ -47,8 +65,8 @@ class Entity {
 }
 
 class Purchasable {
-    static get Apple() : Entity {return new Entity("Apple", 10, 7, "P_APPLE")}
-    static get Pear() : Entity {return new Entity("Pear", 10, 7, "P_PEAR")}
+    public static Apple() : Entity {return new Entity("Apple", 10, 7, "P_APPLE")}
+    public static Pear() : Entity {return new Entity("Pear", 10, 7, "P_PEAR")}
 }
 
 export {Timestamp, EntityBehavior, Quality, Entity, Purchasable}

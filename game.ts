@@ -34,10 +34,12 @@ class Game {
         Game.manager.update(this)
     }
 
-    public addEntity(entity: GameEntities.Entity) {
+    public addEntity(entity: GameEntities.Entity) : void {
         if(this._inventory[entity.name]) this._inventory[entity.name].push(entity)
         else this._inventory[entity.name] = [entity]
     }
+    public addEntities = (...entity: GameEntities.Entity[]) : void => entity.forEach(ne => this.addEntity(ne))
+
 
     private loadGame = () : any => JSON.parse(localStorage.getItem('save-game') as any) ?? {}
     public saveGame = () : void => localStorage.setItem('save-game', JSON.stringify(this))
@@ -45,7 +47,6 @@ class Game {
         if(!Game.game) Game.game = new Game()
         return Game.game
     }
-
 
 
     public get inventory() : any {return this._inventory}
@@ -99,5 +100,5 @@ class GameWindow {
 
 const GameManager = Game.getInstance() //Singleton game manager
 GameManager.update()
-GameManager.addEntity(GameEntities.Purchasable.Apple)
+GameManager.addEntities(GameEntities.Purchasable.Apple(), GameEntities.Purchasable.Apple().modify({cost: 200}))
 console.log(GameManager.inventory)
