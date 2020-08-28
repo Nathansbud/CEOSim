@@ -2,6 +2,29 @@ body, html {
     background: #dddddd;
 }
 
-div:not(#status):not(#production) {
+section:not(#status):not(#production) {
     display: none;
 }
+
+#inventory {
+    z-index: 1;
+    left: 0;
+    top: 0; 
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(214, 207, 207, 0.75);
+    display: none;
+}
+
+#inventory h1 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+#inventory li {
+    font-weight: bold;
+}
+
+h1.surround::before {content: "[";}
+h1.surround::after {content: "]";}

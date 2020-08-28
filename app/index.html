@@ -7,26 +7,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id='status'>
-        <h3>ER: <span id="earn-rate"></span> / Hr</h3>
-        <h3>Funds: <span id='funds'></span></h3>
-        <h3>Debt: <span id='debt'></span></h3>
-        <span id='employees'></span>
+    <section id='status'>
+        <div id='summary-text'>
+            <h3>ER: <span id="earn-rate"></span> / Hr</h3>
+            <h3>Funds: <span id='funds'></span></h3>
+            <h3>Debt: <span id='debt'></span></h3>
+        </div>
+    </section>
+
+    <section id='production'>
+        <div id='buttons'>
+            <button id='work-button'>Work</button>
+            <button id='hire-button'>Hire Employee</button>
+            <button id='inventory-button'>Show Inventory</button>
+            <!-- <button id='store-button'>Show Store</button> -->
+        </div>
+    </section>
+
+    <section id='resources'>
+
+    </section>
+    <section id='upgrades'>
+
+    </section>
+    <div id='inventory' tabindex='0'>
+        <div id='inventory-content'>
+            <h1 class="surround">Inventory</h1>
+            <ul id='inventory-items'>
+
+            </ul>
+        </div>
     </div>
-
-    <div id='production'>
-        <button id='work-button'>Work</button>
-        <button id='hire-button'>Hire Employee</button>
-    <div>
-
-
-    <div id='resources'>
-
-    </div>  
-
-    <div id='upgrades'>
-        
-    </div>
-    <script type='module' src="../build/game.js"></script>    
+    <script type='module' src="../build/manager.js"></script>    
 </body>
 </html>

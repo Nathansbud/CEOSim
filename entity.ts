@@ -20,10 +20,12 @@ interface EntityMutableProperty {
     flags?: EntityBehavior
 }
 
+interface Inventory {
+    [key: string]: Entity[]
+}
 
 type Quality = 'trash' | 'low' | 'normal' | 'high' | 'excellent' 
 class Entity {
-    // [prop: string] : any
     private _cost: number
     
     private _lifetime: number | Timestamp //Total entity lifetime
@@ -34,7 +36,6 @@ class Entity {
     private _quality?: Quality
     
     [prop: string]: any
-    [prop: number]: any
     
     constructor(name: string, cost: number, lifetime: number | Timestamp, id: string, quality?: Quality, flags?: EntityBehavior) {
         this._name = name
@@ -69,4 +70,4 @@ class Purchasable {
     public static Pear() : Entity {return new Entity("Pear", 10, 7, "P_PEAR")}
 }
 
-export {Timestamp, EntityBehavior, Quality, Entity, Purchasable}
+export {Timestamp, EntityBehavior, Quality, Entity, Purchasable, Inventory}
